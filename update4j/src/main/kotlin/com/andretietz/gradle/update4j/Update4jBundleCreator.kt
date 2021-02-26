@@ -103,6 +103,7 @@ open class Update4jBundleCreator : DefaultTask() {
             .readFrom(resolvedDependency.file.absolutePath)
             .uri(resolvedDependency.file.name)
             .classpath(resolvedDependency.file.name.endsWith(".jar"))
+            .ignoreBootConflict()
         }
 
         is ExternalResolvedDependency -> {
@@ -111,6 +112,7 @@ open class Update4jBundleCreator : DefaultTask() {
             .uri(resolvedDependency.url.toURI())
             .classpath(resolvedDependency.file.name.endsWith(".jar"))
             .os(resolvedDependency.os)
+            .ignoreBootConflict()
         }
       }
     }.forEach { builder.file(it) }

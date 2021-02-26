@@ -2,8 +2,9 @@ plugins {
   id 'kotlin'
   id 'java-gradle-plugin'
   id 'maven-publish'
-  id "com.vanniktech.maven.publish"
 }
+
+version = VERSION_NAME
 
 sourceCompatibility = "1.8"
 compileKotlin.kotlinOptions.jvmTarget = "1.8"
@@ -21,15 +22,6 @@ gradlePlugin {
     update4jPlugin {
       id = "com.andretietz.gradle.update4j"
       implementationClass = "com.andretietz.gradle.update4j.Update4jPlugin"
-    }
-  }
-}
-
-mavenPublish {
-  targets {
-    uploadArchives {
-      releaseRepositoryUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
-      snapshotRepositoryUrl = "https://oss.sonatype.org/content/repositories/snapshots/"
     }
   }
 }
