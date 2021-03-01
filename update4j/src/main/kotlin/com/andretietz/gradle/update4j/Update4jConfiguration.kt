@@ -9,6 +9,7 @@ open class Update4jConfiguration @JvmOverloads constructor(
   var signingKey: String? = null,
   var launcherClass: String? = null,
   var remoteLocation: String? = null,
+  var artifactsConfiguration: String? = null,
   var bundleLocation: String = OUTPUT_DIRECTORY_DEFAULT
 ) {
   override fun toString(): String {
@@ -19,6 +20,7 @@ open class Update4jConfiguration @JvmOverloads constructor(
             remoteLocation: $remoteLocation,
             bundleLocation: $bundleLocation,
             resourcesFolderName: $resourcesFolderName,
+            artifactsConfiguration: $artifactsConfiguration,
             resources: $resources
         """.trimIndent()
   }

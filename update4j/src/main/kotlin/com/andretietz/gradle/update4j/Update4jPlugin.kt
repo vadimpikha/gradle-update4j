@@ -22,7 +22,7 @@ class Update4jPlugin : Plugin<Project> {
       task.launcherClass = configuration.launcherClass!!
       task.remoteLocation = configuration.remoteLocation!!
       task.useMaven = configuration.useMaven
-
+      task.artifactsConfiguration = configuration.artifactsConfiguration
       task.resources = configuration.resources
       task.resourcesDirectoryName = configuration.resourcesFolderName
     }

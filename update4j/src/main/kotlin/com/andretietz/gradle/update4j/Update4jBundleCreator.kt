@@ -26,6 +26,9 @@ open class Update4jBundleCreator : DefaultTask() {
   lateinit var launcherClass: String
 
   @Input
+  var artifactsConfiguration: String? = null
+
+  @Input
   lateinit var remoteLocation: String
 
   @Input
@@ -42,6 +45,8 @@ open class Update4jBundleCreator : DefaultTask() {
 
   @OutputDirectory
   var outputDirectory: File = File(project.buildDir, OUTPUT_DIRECTORY_DEFAULT)
+
+  private fun getDepsConfiguration() = artifactsConfiguration ?: DEFAULT_CONFIGURATION
 
   @TaskAction
   fun generateXml() {
@@ -68,7 +73,7 @@ open class Update4jBundleCreator : DefaultTask() {
       .toSet()
 
     // copy all artifacts from this project into the output dir
-    project.configurations.getByName(DEFAULT_CONFIGURATION).allArtifacts
+    project.configurations.getByName(getDepsConfiguration()).allArtifacts
       .map { it.file }.forEach { artifact ->
         val targetFile = File("${outputDirectory.absolutePath}/${artifact.name}")
         artifact.copyTo(targetFile, true)
@@ -80,7 +85,7 @@ open class Update4jBundleCreator : DefaultTask() {
       }
 
     //project.configurations.getByName(DEFAULT_CONFIGURATION).resolvedConfiguration.resolvedArtifacts
-    val resolvedDependencies = project.configurations.getByName(DEFAULT_CONFIGURATION)
+    val resolvedDependencies = project.configurations.getByName(getDepsConfiguration())
       .resolvedConfiguration.resolvedArtifacts
       .toSet()
       .filterIsInstance<DefaultResolvedArtifact>()
