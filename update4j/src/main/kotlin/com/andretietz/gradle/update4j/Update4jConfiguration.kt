@@ -1,5 +1,7 @@
 package com.andretietz.gradle.update4j
 
+import org.update4j.Property
+
 open class Update4jConfiguration @JvmOverloads constructor(
   var resourcesFolderName: String = ".",
   var resources: List<String> = listOf(),
@@ -10,6 +12,8 @@ open class Update4jConfiguration @JvmOverloads constructor(
   var launcherClass: String? = null,
   var remoteLocation: String? = null,
   var artifactsConfiguration: String? = null,
+  var properties: List<Property> = emptyList(),
+  var basePath: String? = null,
   var bundleLocation: String = OUTPUT_DIRECTORY_DEFAULT
 ) {
   override fun toString(): String {
@@ -22,6 +26,8 @@ open class Update4jConfiguration @JvmOverloads constructor(
             resourcesFolderName: $resourcesFolderName,
             artifactsConfiguration: $artifactsConfiguration,
             resources: $resources
+            properties: $properties
+            basePath: $basePath
         """.trimIndent()
   }
 

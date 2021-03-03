@@ -12,6 +12,7 @@ import org.gradle.api.tasks.TaskAction
 import org.update4j.Configuration
 import org.update4j.FileMetadata
 import org.update4j.OS
+import org.update4j.Property
 import java.io.File
 import java.net.URI
 import java.net.URL
@@ -26,6 +27,9 @@ open class Update4jBundleCreator : DefaultTask() {
   lateinit var launcherClass: String
 
   @Input
+  lateinit var basePath: String
+
+  @Input
   var artifactsConfiguration: String? = null
 
   @Input
@@ -36,6 +40,9 @@ open class Update4jBundleCreator : DefaultTask() {
 
   @Input
   lateinit var resourcesDirectoryName: String
+
+  @Input
+  lateinit var properties: List<Property>
 
   @Input
   lateinit var resources: List<String>
@@ -57,8 +64,9 @@ open class Update4jBundleCreator : DefaultTask() {
 
     val builder = Configuration.builder()
       .baseUri(remoteLocation)
-      .basePath("\${user.dir}")
+      .basePath(basePath)
       .launcher(launcherClass)
+      .properties(properties)
 
     val repos = project.repositories
       .filterIsInstance<MavenArtifactRepository>()
