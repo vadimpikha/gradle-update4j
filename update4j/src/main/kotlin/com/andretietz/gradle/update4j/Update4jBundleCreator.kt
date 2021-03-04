@@ -9,10 +9,7 @@ import org.gradle.api.internal.artifacts.DefaultResolvedArtifact
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.OutputDirectory
 import org.gradle.api.tasks.TaskAction
-import org.update4j.Configuration
-import org.update4j.FileMetadata
-import org.update4j.OS
-import org.update4j.Property
+import org.update4j.*
 import java.io.File
 import java.net.URI
 import java.net.URL
