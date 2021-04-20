@@ -39,7 +39,7 @@ open class Update4jBundleCreator : DefaultTask() {
   lateinit var resourcesDirectoryName: String
 
   @Input
-  lateinit var properties: List<Triple<String, String, OS>>
+  lateinit var properties: List<Triple<String, String, String>>
 
   @Input
   lateinit var resources: List<String>
@@ -63,7 +63,7 @@ open class Update4jBundleCreator : DefaultTask() {
       .baseUri(remoteLocation)
       .basePath(basePath)
       .launcher(launcherClass)
-      .properties(properties.map { Property(it.first, it.second, it.third) })
+      .properties(properties.map { Property(it.first, it.second, OS.fromShortName(it.third)) })
 
     val repos = project.repositories
       .filterIsInstance<MavenArtifactRepository>()
