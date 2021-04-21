@@ -25,7 +25,7 @@ class Update4jPlugin : Plugin<Project> {
       task.artifactsConfiguration = configuration.artifactsConfiguration
       task.resources = configuration.resources
       task.resourcesDirectoryName = configuration.resourcesFolderName
-      task.properties = configuration.properties
+      task.update4jProperties = configuration.update4jProperties
       task.basePath = configuration.basePath!!
     }
   }
