@@ -5,7 +5,6 @@ import org.gradle.api.artifacts.Dependency.DEFAULT_CONFIGURATION
 import org.gradle.api.artifacts.ResolvedArtifact
 import org.gradle.api.artifacts.ResolvedDependency
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository
-import org.gradle.api.internal.artifacts.DefaultResolvedArtifact
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.OutputDirectory
 import org.gradle.api.tasks.TaskAction
@@ -93,7 +92,6 @@ open class Update4jBundleCreator : DefaultTask() {
     val resolvedDependencies = project.configurations.getByName(getDepsConfiguration())
       .resolvedConfiguration.resolvedArtifacts
       .toSet()
-      .filterIsInstance<DefaultResolvedArtifact>()
       .flatMap(this::createPossibleDependencies)
       .map { dependency ->
         // get download url if available
@@ -193,17 +191,17 @@ open class Update4jBundleCreator : DefaultTask() {
     )
   }
 
-  private fun createPossibleDependencies(dependency: DefaultResolvedArtifact): Collection<UnresolvedDependency> {
+  private fun createPossibleDependencies(dependency: ResolvedArtifact): Collection<UnresolvedDependency> {
     return if (OS.values()
         .map { it.shortName }
-        .any { it == dependency.artifactName.classifier } && useMaven
+        .any { it == dependency.classifier } && useMaven
     ) {
       OS.values().filter { it != OS.OTHER }.map {
         UnresolvedDependency(
           dependency.moduleVersion.id.group,
           dependency.moduleVersion.id.name,
           dependency.moduleVersion.id.version,
-          dependency.artifactName.extension ?: dependency.artifactName.type,
+          dependency.extension ?: dependency.type,
           null,
           true,
           it.shortName
@@ -215,10 +213,10 @@ open class Update4jBundleCreator : DefaultTask() {
           dependency.moduleVersion.id.group,
           dependency.moduleVersion.id.name,
           dependency.moduleVersion.id.version,
-          dependency.artifactName.extension ?: dependency.artifactName.type,
+          dependency.extension ?: dependency.type,
           dependency.file,
           false,
-          dependency.artifactName.classifier
+          dependency.classifier
         )
       )
     }
